@@ -10,7 +10,7 @@
 body {
 font-family: 'Poppins', sans-serif;
 overflow: hidden;
-color: #04f7a6;
+color: #6e9df3;
 height: 100vh;
 width: 100vw;
 position: relative;
@@ -48,7 +48,6 @@ background: rgba(248, 0, 0, 0.4);
 backdrop-filter: blur(8px);
 }
 
-/* Ultra Smooth Screen Transition */
 .screen {
 opacity: 0;
 visibility: hidden;
@@ -70,7 +69,6 @@ visibility: visible;
 transform: scale(1);
 }
 
-/* Card */
 .card {
 background: rgba(36, 36, 37, 0.7);
 background-image: url('niki1.jpeg');
@@ -83,7 +81,7 @@ padding: 40px;
 max-width: 850px;
 width: 90%;
 box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-border: 2px solid rgba(212, 0, 240, 0.801);
+border: 2px solid rgba(39, 133, 241, 0.801);
 animation: fadeUp 1.2s ease;
 }
 
@@ -103,12 +101,11 @@ color: #ff4b7d;
 text-shadow: 0 0 20px rgba(255, 75, 125, 0.7);
 }
 
-/* Buttons */
 button {
 padding: 15px 30px;
 border-radius: 50px;
 border: none;
-background: #ff4b7d;
+background: #a90fe6c4;
 color: white;
 font-size: 1.1rem;
 cursor: pointer;
@@ -130,10 +127,9 @@ border: 5px solid rgba(255,255,255,0.3);
 margin: 20px 0;
 }
 
-/* Increased Memory Image Height (Slightly) */
 .memory-img {
 width: 100%;
-max-height: 360px; /* increased from 300 */
+max-height: 360px;
 object-fit: cover;
 border-radius: 15px;
 margin: 20px 0;
@@ -148,21 +144,6 @@ transform: scale(1.03);
 .yes-btn { background: #4CAF50; }
 .no-btn { background: #999; position: relative; }
 
-/* Floating Hearts */
-.heart {
-position: fixed;
-bottom: -50px;
-font-size: 24px;
-animation: floatUp 6s linear infinite;
-}
-
-@keyframes floatUp {
-0% { transform: translateY(0); opacity: 0; }
-10% { opacity: 1; }
-100% { transform: translateY(-120vh); opacity: 0; }
-}
-
-/* Premium Romantic Screens */
 .premium-screen {
 background: radial-gradient(circle at center, #111 0%, #000 70%);
 color: white;
@@ -182,7 +163,6 @@ animation: shine 4s linear infinite;
 100% { background-position: 200%; }
 }
 
-/* Sparkle Effect */
 .sparkle {
 position: fixed;
 width: 6px;
@@ -199,12 +179,21 @@ animation: sparkleAnim 2s linear infinite;
 100% { opacity: 0; transform: scale(0.5); }
 }
 
+.typing-text {
+min-height: 80px;
+white-space: pre-line;
+}
 </style>
 
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
+<!-- MP3 MUSIC -->
+<audio id="bgMusic" loop>
+<source src="love.mp3" type="audio/mp3">
+</audio>
 
 <div class="video-background">
 <video autoplay muted loop playsinline>
@@ -219,13 +208,13 @@ animation: sparkleAnim 2s linear infinite;
 <button id="startBtn">Start</button>
 </div>
 
-<!-- Slides (Unchanged Content) -->
+<!-- Slides -->
 <div class="screen" id="screen2">
 <div class="card">
 <img src="niki.jpeg" class="profile-pic">
 <h3>HI PIKACHU ...!!!</h3>
 <h1 class="glow-text">My Dearest Love 💖</h1>
-<p>I have something special to show you...</p>
+<div class="typing-text" id="text2"></div>
 <button id="btn1">Open My Heart's Message 💌</button>
 </div>
 </div>
@@ -233,7 +222,7 @@ animation: sparkleAnim 2s linear infinite;
 <div class="screen" id="screen3">
 <div class="card">
 <h2>Our Beautiful Beginning</h2>
-<p>From the moment we met, my world changed forever...</p>
+<div class="typing-text" id="text3"></div>
 <img src="us.jpeg" class="memory-img">
 <button id="btn2">Next ➜</button>
 </div>
@@ -242,7 +231,7 @@ animation: sparkleAnim 2s linear infinite;
 <div class="screen" id="screen4">
 <div class="card">
 <h2>Our Journey</h2>
-<p>From hello to forever in my heart...</p>
+<div class="typing-text" id="text4"></div>
 <img src="memory5.jpeg" class="memory-img">
 <button id="btn3">Continue ➜</button>
 </div>
@@ -251,7 +240,7 @@ animation: sparkleAnim 2s linear infinite;
 <div class="screen" id="screen5">
 <div class="card">
 <h2>Special Memories</h2>
-<p>Every moment with you is precious...</p>
+<div class="typing-text" id="text5"></div>
 <img src="special.jpg" class="memory-img">
 <button id="btn4">More Memories ➜</button>
 </div>
@@ -260,7 +249,7 @@ animation: sparkleAnim 2s linear infinite;
 <div class="screen" id="screen6">
 <div class="card">
 <h2>You Complete Me</h2>
-<p>You became my happiness, my peace, and my greatest adventure.</p>
+<div class="typing-text" id="text6"></div>
 <img src="love.jpg" class="memory-img">
 <button id="btn5">Final Question ➜</button>
 </div>
@@ -277,31 +266,67 @@ animation: sparkleAnim 2s linear infinite;
 </div>
 </div>
 
-<!-- YES SCREEN -->
 <div class="screen premium-screen" id="screen8">
 <h1 class="premium-title">Yeah… You Said YES 💖</h1>
 <p style="margin-top:20px;">You just made my universe complete ✨</p>
-<h2 id="countdown" style="margin-top:30px; font-size:2rem; color:#ffd700;">
+<h2 style="margin-top:30px; font-size:2rem; color:#ffd700;">
 Something special in <span id="timer">3</span>...
 </h2>
 </div>
 
-
-<!-- FINAL -->
 <div class="screen premium-screen" id="screen9">
 <h1 class="premium-title">Happy Valentine's Day My Jaan ❤️</h1>
-<p style="margin-top:20px;">Forever Starts Now 💕</p>
+<div class="typing-text" id="finalText"></div>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
+const music = document.getElementById("bgMusic");
+
+function typeWriter(id, text, speed = 55) {  // slowed typing
+const element = document.getElementById(id);
+element.innerHTML = "";
+let i = 0;
+function typing() {
+if (i < text.length) {
+element.innerHTML += text.charAt(i);
+i++;
+setTimeout(typing, speed);
+}
+}
+typing();
+}
+
 function nextScreen(num) {
 document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
 document.getElementById('screen' + num).classList.add('active');
+
+if(num === 2){
+typeWriter("text2","I have something special to tell you.\nEvery moment with you feels like magic.\nYou are the best part of my life.");
+}
+if(num === 3){
+typeWriter("text3","From the first day we talked,\nmy world started becoming beautiful.\nBecause you entered it.");
+}
+if(num === 4){
+typeWriter("text4","We didn’t just meet,\nwe connected.\nAnd that connection means everything.");
+}
+if(num === 5){
+typeWriter("text5","Every memory with you is my treasure.\nEvery smile of yours is my peace.");
+}
+if(num === 6){
+typeWriter("text6","You are my happiness,\nmy comfort,\nand my forever.");
+}
+if(num === 9){
+typeWriter("finalText","Thank you for choosing me.\nI will choose you again and again,\nevery single day.\nForever starts now ❤️");
+}
 }
 
-document.getElementById("startBtn").onclick = () => nextScreen(2);
+document.getElementById("startBtn").onclick = () => {
+music.play();   // autoplay after user click (safe)
+nextScreen(2);
+};
+
 document.getElementById("btn1").onclick = () => nextScreen(3);
 document.getElementById("btn2").onclick = () => nextScreen(4);
 document.getElementById("btn3").onclick = () => nextScreen(5);
@@ -309,33 +334,30 @@ document.getElementById("btn4").onclick = () => nextScreen(6);
 document.getElementById("btn5").onclick = () => nextScreen(7);
 
 document.getElementById("yesBtn").onclick = function() {
-    nextScreen(8);
+nextScreen(8);
 
-    /* Sparkle Burst */
-    for(let i=0;i<60;i++){
-        let s=document.createElement("div");
-        s.className="sparkle";
-        s.style.left=Math.random()*100+"vw";
-        s.style.top=Math.random()*100+"vh";
-        document.body.appendChild(s);
-        setTimeout(()=>s.remove(),2000);
-    }
+for(let i=0;i<60;i++){
+let s=document.createElement("div");
+s.className="sparkle";
+s.style.left=Math.random()*100+"vw";
+s.style.top=Math.random()*100+"vh";
+document.body.appendChild(s);
+setTimeout(()=>s.remove(),2000);
+}
 
-    // Countdown Logic
-    let timeLeft = 3;
-    const timerElement = document.getElementById("timer");
+let timeLeft = 3;
+const timerElement = document.getElementById("timer");
 
-    const countdown = setInterval(() => {
-        timeLeft--;
-        timerElement.textContent = timeLeft;
+const countdown = setInterval(() => {
+timeLeft--;
+timerElement.textContent = timeLeft;
 
-        if (timeLeft === 0) {
-            clearInterval(countdown);
-            nextScreen(9);
-        }
-    }, 1000);
+if (timeLeft === 0) {
+clearInterval(countdown);
+nextScreen(9);
+}
+}, 1000);
 };
-
 
 document.getElementById("noBtn").onmouseover=function(){
 const x=Math.random()*(window.innerWidth-200);
